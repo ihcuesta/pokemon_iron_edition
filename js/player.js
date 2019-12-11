@@ -26,8 +26,8 @@ class Player {
     draw(framesCounter) {
       this.ctx.drawImage(       // Cada línea es un argumento de la función drawImage
         this.image,             // La imagen
-        this.framesIndex * Math.floor(this.image.width / this.frames),   // La x
-        0,                                                               // La y
+        0,   // La x
+        0,   // La y
         this.width,
         this.height,
         this.posX, 
