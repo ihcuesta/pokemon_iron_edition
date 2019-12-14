@@ -76,21 +76,19 @@ class Player {
           this.srcY = this.trackUp * this.height;
           if (this.posX < 60) {
             this.posY -= 10;
-          } if (this.posX > 60 && this.posY > 400) {
+          }
+          if (this.posX > 60 && this.posY > 400) {
             this.posY -= 10;
-            
-          } if (!this.notCheck) {
+
+          }
+          if (!this.notCheck) {
             if (this.posY === 400 && this.posX > 330 && this.posX < 430) {
               textIntro("Mejor no interrumpir la clase. Da un rodeo.");
               this.notCheck = true;
             }
-          } if (this.posY === 40) {
-            setTimeout(function(){ 
-              textIntro("¡Alto! Demuéstrame lo que has aprendido");
-            }, 2000);
-            setTimeout(function(){ 
-              Game.battleInit();
-            }, 5000);
+          }
+          if (this.posY === 40) {
+            this.activeBattle();
           }
         } else if (direction === "right") {
           this.srcY = this.trackRight * this.height;
@@ -111,48 +109,116 @@ class Player {
           }
         }
       }
-    }
-  }
+
+      if (Game.screen === 2) {
+        if (direction === "up") {
+          this.srcY = this.trackUp * this.height;
+          if (this.posY > 30) {
+            this.posY -= 10;
+          }
+        }
+        if (direction === "right") {
+          this.srcY = this.trackRight * this.height;
+          if (this.posY < 100 && this.posX < this.limitRight) {
+            this.posX += 10;
+          }
+          if (this.posY > 100 && this.posX < 60) {
+            this.posX += 10;
+          }
+          if (this.posX === 560) {
+            this.activeBattle();
+
+          }
 
 
+        } else if (direction === "down") {
+          this.srcY = this.trackDown * this.height;
+          if (this.posX > 60 && this.posY < 90) {
+            this.posY += 10;
+          }
+          if (this.posX < 60 && this.limitDown) {
+            this.posY += 10;
+          }
 
-  firstSteps() {
-    if (Game.framesCounter < 30) {
-      if (Game.screen === 1) {
-        this.srcY = this.trackUp * this.height;
-        this.posY -= 2;
+        } else if (direction === "left") {
+          this.srcY = this.trackLeft * this.height;
+          if (this.posX > this.limitLeft) {
+            this.posX -= 10;
+          }
+        }
       }
     }
-    this.ableToMove = true; // Recuerda igualarlo a false cuando se pase de pantalla
   }
 
-  nextScreen() {
 
-    if (this.goOn) {
-      this.posY -= 1;
+
+
+
+activeBattle() {
+  setTimeout(function () {
+    textIntro("¡Alto! Demuéstrame lo que has aprendido");
+  }, 2000);
+  setTimeout(function () {
+    document.getElementById("battle").className = "visible";
+  }, 5000);
+}
+
+
+firstSteps() {
+  if (Game.framesCounter < 30) {
+    if (Game.screen === 1) {
+      this.srcY = this.trackUp * this.height;
+      this.posY -= 2;
+    }
+    if (Game.screen === 2) {
+      this.srcY = this.trackUp * this.height;
+      this.posY -= 2;
+    }
+    if (Game.screen === 3) {
+      this.srcY = this.trackRight * this.height;
+      this.posX += 2;
+    }
+  }
+  this.ableToMove = true; // Recuerda igualarlo a false cuando se pase de pantalla
+}
+
+nextScreen() {
+
+  if (this.goOn) {
+    this.srcY = this.trackUp * this.height;
+    this.posY -= 1;
+  }
+}
+
+approach() {
+  if (Game.screen === 1) {
+    return this.posX + this.width;
+  }
+  if (Game.screen === 2) {
+    return this.posY + this.height;
   }
 }
 
 
-  setListeners() {
-    document.addEventListener('keydown', (e) => {
-      switch (e.keyCode) {
-        case this.keys.TOP_KEY:
-          this.move("up");
-          break;
-        case this.keys.RIGHT_KEY:
-          this.move("right");
-          break;
-        case this.keys.DOWN_KEY:
-          this.move("down");
-          break;
-        case this.keys.LEFT_KEY:
-          this.move("left");
-          break;
-      }
+setListeners() {
+  document.addEventListener('keydown', (e) => {
+    switch (e.keyCode) {
+      case this.keys.TOP_KEY:
+        this.move("up");
+        break;
+      case this.keys.RIGHT_KEY:
+        this.move("right");
+        break;
+      case this.keys.DOWN_KEY:
+        this.move("down");
+        break;
+      case this.keys.LEFT_KEY:
+        this.move("left");
+        break;
+    }
 
 
-    })
-  }
+  })
+}
 
 }

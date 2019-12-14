@@ -30,14 +30,18 @@ body {
     background: #FFF;
     position: absolute;
     top: 10px;
-    left: -790px;
+   z-index: 1000;
 }
 
 .visible {
-    left: 10px !important;
+    left: 10px;
     -webkit-transition: all 2000ms ease-in-out;
 -moz-transition: all 2000ms ease-in-out;
 -ms-transition: all 2000ms ease-in-out;
 -o-transition: all 2000ms ease-in-out;
 transition: all 2000ms ease-in-out;
+}
+
+.novisible {
+    left: -790px;
 }
