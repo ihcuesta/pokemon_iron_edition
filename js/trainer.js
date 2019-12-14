@@ -65,6 +65,12 @@ class Trainer {
         this.posY -= 2;
       }
     }
+
+    if (Game.screen === 3) {
+      if (this.posX > limit) {
+        this.posX -= 2;
+      }
+    }
   }
 
   

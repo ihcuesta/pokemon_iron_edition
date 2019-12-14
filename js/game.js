@@ -100,6 +100,18 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
           
         }
       }
+
+      if (this.screen === 3) {
+        if (this.player.posX > 370) {
+          this.player.ableToMove = false;
+          // let limit = this.player.posX + this.player.width;
+  
+          this.trainer.move(this.player.approach())
+          
+          //this.player.posX + this.player.width
+          
+        }
+      }
     },
 
    
@@ -116,8 +128,12 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
         if (this.player.posY < 0) {
           clearInterval(this.interval);
           this.framesCounter = 0;
-          this.start(50, 400, "img/escenario3.png", 3, "Trainer 3", 560, 170, "img/trainer2.png");
+          this.start(-50, 300, "img/escenario3.png", 3, "Trainer 3", 500, 280, "img/trainer3.png");
         }
+      }
+
+      if (this.screen === 3) {
+        this.srcY = this.trackDown * this.height;
       }
     }
 

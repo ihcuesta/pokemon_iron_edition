@@ -147,6 +147,39 @@ class Player {
           }
         }
       }
+
+      if (Game.screen === 3) {
+        if (direction === "up") {
+          this.srcY = this.trackUp * this.height;
+          if (this.posY > 280) {
+            this.posY -= 10;
+          }
+        }
+        if (direction === "right") {
+          this.srcY = this.trackRight * this.height;
+          if (this.posX < 380) {
+            this.posX += 10;
+          }
+        
+          if (this.posX === 360) {
+            this.activeBattle();
+
+          }
+
+
+        } else if (direction === "down") {
+          this.srcY = this.trackDown * this.height;
+          if (this.posY < 380) {
+            this.posY += 10;
+          }
+
+        } else if (direction === "left") {
+          this.srcY = this.trackLeft * this.height;
+          if (this.posX > this.limitLeft) {
+            this.posX -= 10;
+          }
+        }
+      }
     }
   }
 
@@ -183,11 +216,20 @@ firstSteps() {
 }
 
 nextScreen() {
-
+if (Game.screen === 1 || Game.screen === 2) {
   if (this.goOn) {
     this.srcY = this.trackUp * this.height;
     this.posY -= 1;
   }
+}
+
+if (Game.screen === 3) {
+  if (this.goOn) {
+    this.srcY = this.trackDown * this.height;
+   
+  }
+}
+  
 }
 
 approach() {
@@ -196,6 +238,9 @@ approach() {
   }
   if (Game.screen === 2) {
     return this.posY + this.height;
+  }
+  if (Game.screen === 3) {
+    return this.posX + this.height;
   }
 }
 
