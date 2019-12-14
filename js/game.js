@@ -22,9 +22,10 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
     this.width = 800;                  // a la propiedad width de Game le asigna todo el ancho de pantalla
     this.height = 500;                // a la propiedad height de Game le asigna todo el alto de pantalla
     this.canvas.width = this.width;                  // la anchura del canvas será todo el ancho de pantalla
-    this.canvas.height = this.height;                // la altura del canvas será todo el alto de pantalla
+    this.canvas.height = this.height;   
+    this.ready = false;             // la altura del canvas será todo el alto de pantalla
     textIntro("¡Hola Ash! ¡Bienvenido a Iron Hack!");
-    
+    this.trainerReady();
     this.start(390, 500, "img/escenario1.png", 1);                                    // Ejecuta la función start (game loop)
     
   },
@@ -32,12 +33,12 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
   // La función start es el game loop (update o bucle de renderizado), refresca el canvas mediante un setInterval para detectar movimiento
   start: function(playerX, playerY, setImage, screen) {
     this.screen = screen;
-    this.ready = false;
+    
     
     this.trainer = new Trainer(this.ctx, "Trainer 1", 300, 35, "img/trainer.png")
     this.set = new Set(this.ctx, setImage);
     this.player = new Player(this.ctx, playerX, playerY, 'img/ashframes2.png', this.playerKeys, this.screen); // Crea un nuevo personaje                        // Ejecuta la función reset, que reinicia el juego pintando los valores de inicio del fondo, el jugador, los obstaculos y el marcador.
-    this.trainerReady();
+    
     this.interval = setInterval(() => { // En este intervalo se irán actualizando los frames
       this.player.firstSteps();
       this.framesCounter++;             // Aumenta un frame al contador de frames
@@ -47,7 +48,7 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
       // this.moveAll();                   // 3. MUEVE: Ejecuta la función moveAll (cambia las posiciones de todo lo que hay que cambiar de lugar)
       // this.player.setListeners(this.limitUp(), this.limitRight(), this.limitDown(), this.limitLeft())
       this.trainerApproach();
-      if (this.trainer.ready) this.trainer.trainerReady(this.trainer);
+      if (this.ready) this.trainerReady();
       // console.log(this.player.posX + " , " + this.player.posY )
       // if(this.framesCounter > 1000) this.framesCounter = 0;  // Creo que evita que el juego cargue una cantidad muy alta y pueda ralentizarlo
     }, 1000/this.fps)                   // Define que el canvas se va a refrescar cada 16,6 milisegundos, es decir, 60 actualizaciones por segundo (60 fps, tasa de refresco recomendada en videojuegos )
@@ -87,8 +88,10 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
     trainerReady() {
       if (this.ready) {
           setTimeout(function(){
-              textIntro("¡Ato ahí! ¡Demuéstrame lo que has aprendido!") 
+            console.log("error")
+              textIntro("¡Alto ahí! ¡Demuéstrame lo que has aprendido!") 
             }, 2000);
+            this.ready = false;
       }
     }
     
