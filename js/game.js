@@ -27,16 +27,16 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
                 // la altura del canvas será todo el alto de pantalla
     textIntro("¡Hola Ash! ¡Bienvenido a Iron Hack!");
     
-    this.start(390, 500, "img/escenario1.png", 1);                                    // Ejecuta la función start (game loop)
+    this.start(390, 500, "img/escenario1.png", 1, "Trainer 1", 200, 30, "img/trainer.png");                                    // Ejecuta la función start (game loop)
     
   },
 
   // La función start es el game loop (update o bucle de renderizado), refresca el canvas mediante un setInterval para detectar movimiento
-  start: function(playerX, playerY, setImage, screen) {
+  start: function(playerX, playerY, setImage, screen, trainerName, trainerX, trainerY, trainerImage) {
     this.screen = screen;
     
     
-    this.trainer = new Trainer(this.ctx, "Trainer 1", 300, 35, "img/trainer.png")
+    this.trainer = new Trainer(this.ctx, trainerName, trainerX, trainerY, trainerImage)
     this.set = new Set(this.ctx, setImage);
     this.player = new Player(this.ctx, playerX, playerY, 'img/ashframes2.png', this.playerKeys, this.screen); // Crea un nuevo personaje                        // Ejecuta la función reset, que reinicia el juego pintando los valores de inicio del fondo, el jugador, los obstaculos y el marcador.
     
@@ -48,12 +48,10 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
       this.drawAll();                   // 2. PINTA: Ejecuta la función drawAll (pinta todo lo que hay que pintar)
       // this.moveAll();                   // 3. MUEVE: Ejecuta la función moveAll (cambia las posiciones de todo lo que hay que cambiar de lugar)
       // this.player.setListeners(this.limitUp(), this.limitRight(), this.limitDown(), this.limitLeft())
-      this.trainerApproach(function() {
-        this.battleInit();
-      });
+      this.trainerApproach();
       this.player.nextScreen();
       this.endLevel() ;
-      // console.log(this.player.posX + " , " + this.player.posY )
+      console.log(this.player.posX + " , " + this.player.posY )
       // if(this.framesCounter > 1000) this.framesCounter = 0;  // Creo que evita que el juego cargue una cantidad muy alta y pueda ralentizarlo
     }, 1000/this.fps)  
                   // Define que el canvas se va a refrescar cada 16,6 milisegundos, es decir, 60 actualizaciones por segundo (60 fps, tasa de refresco recomendada en videojuegos )
@@ -78,30 +76,47 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
     
   },
 
-  trainerApproach() {
+  trainerApproach(limit) {
     
       if (this.screen === 1) {
         if (this.player.posY < 35) {
           this.player.ableToMove = false;
           // let limit = this.player.posX + this.player.width;
   
-          this.trainer.move(this.player.posX + this.player.width)
+          this.trainer.move(this.player.approach())
           
+          //this.player.posX + this.player.width
           
+        }
+      }
+      if (this.screen === 2) {
+        if (this.player.posX > 550) {
+          this.player.ableToMove = false;
+          // let limit = this.player.posX + this.player.width;
+  
+          this.trainer.move(this.player.approach())
+          
+          //this.player.posX + this.player.width
           
         }
       }
     },
 
-    battleInit() {
-      document.getElementById("battle").className = "visible";
-    },
+   
 
     endLevel() {
       if (this.screen === 1) {
         if (this.player.posY < 0) {
           clearInterval(this.interval);
-          this.start(50, 450, "img/escenario2.png", 2);
+          this.framesCounter = 0;
+          this.start(50, 500, "img/escenario2.png", 2, "Trainer 2", 560, 170, "img/trainer2.png");
+        }
+      }  
+      if (this.screen === 2) {
+        if (this.player.posY < 0) {
+          clearInterval(this.interval);
+          this.framesCounter = 0;
+          this.start(50, 400, "img/escenario3.png", 3, "Trainer 3", 560, 170, "img/trainer2.png");
         }
       }
     }
