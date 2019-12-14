@@ -4,6 +4,7 @@ body {
 
 #canvas {
     background-color: rgb(227, 227, 227);
+    /* Centrar con flex */
 }
 
 #text {
@@ -21,4 +22,22 @@ body {
 
 #dynamic {
     line-height: 30px;
+}
+
+#battle {
+    width: 800px;
+    height: 500px;
+    background: #FFF;
+    position: absolute;
+    top: 10px;
+    left: -790px;
+}
+
+.visible {
+    left: 10px !important;
+    -webkit-transition: all 2000ms ease-in-out;
+-moz-transition: all 2000ms ease-in-out;
+-ms-transition: all 2000ms ease-in-out;
+-o-transition: all 2000ms ease-in-out;
+transition: all 2000ms ease-in-out;
 }

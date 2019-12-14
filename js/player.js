@@ -2,6 +2,8 @@ class Player {
   constructor(ctx, x, y, image, keys) { // Constructor
     this.ctx = ctx;
     this.notCheck = false;
+    this.goOn = false;
+    this.listo = false;
     this.image = new Image();
     this.image.src = image;
     this.framesCounter = 0;
@@ -70,16 +72,25 @@ class Player {
     if (this.ableToMove) {
       if (Game.screen === 1) {
         if (direction === "up") {
+
           this.srcY = this.trackUp * this.height;
           if (this.posX < 60) {
             this.posY -= 10;
-          } else if (this.posX > 60 && this.posY > 400) {
+          } if (this.posX > 60 && this.posY > 400) {
             this.posY -= 10;
-          } else if (!this.notCheck) {
+            
+          } if (!this.notCheck) {
             if (this.posY === 400 && this.posX > 330 && this.posX < 430) {
               textIntro("Mejor no interrumpir la clase. Da un rodeo.");
               this.notCheck = true;
             }
+          } if (this.posY === 40) {
+            setTimeout(function(){ 
+              textIntro("¡Alto! Demuéstrame lo que has aprendido");
+            }, 2000);
+            setTimeout(function(){ 
+              Game.battleInit();
+            }, 5000);
           }
         } else if (direction === "right") {
           this.srcY = this.trackRight * this.height;
@@ -87,7 +98,7 @@ class Player {
             this.posX += 10;
           } else if (this.posY < 390 && this.posX < 50) {
             this.posX += 10;
-          } 
+          }
         } else if (direction === "down") {
           this.srcY = this.trackDown * this.height;
           if (this.posY < this.limitDown) {
@@ -97,24 +108,33 @@ class Player {
           this.srcY = this.trackLeft * this.height;
           if (this.posX > this.limitLeft) {
             this.posX -= 10;
-          } 
+          }
         }
       }
     }
+  }
+
+
+
+  firstSteps() {
+    if (Game.framesCounter < 30) {
+      if (Game.screen === 1) {
+        this.srcY = this.trackUp * this.height;
+        this.posY -= 2;
+      }
     }
+    this.ableToMove = true; // Recuerda igualarlo a false cuando se pase de pantalla
+  }
 
-    firstSteps() {
-      if (Game.framesCounter < 30) {
-        if (Game.screen === 1) {
-          this.srcY = this.trackUp * this.height;
-          this.posY -= 2;
-        }
-      }  
-      this.ableToMove = true;      // Recuerda igualarlo a false cuando se pase de pantalla
-    }
+  nextScreen() {
+
+    if (this.goOn) {
+      this.posY -= 1;
+  }
+}
 
 
-  setListeners(noLimitUp, noLimitRight, noLimitDown, noLimitLeft) {
+  setListeners() {
     document.addEventListener('keydown', (e) => {
       switch (e.keyCode) {
         case this.keys.TOP_KEY:

@@ -12,6 +12,7 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
       RIGHT_KEY: 39,
       DOWN_KEY: 40
     },
+    interval: null,
     
     // score: 0,
 
@@ -23,9 +24,9 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
     this.height = 500;                // a la propiedad height de Game le asigna todo el alto de pantalla
     this.canvas.width = this.width;                  // la anchura del canvas será todo el ancho de pantalla
     this.canvas.height = this.height;   
-    this.ready = false;             // la altura del canvas será todo el alto de pantalla
+                // la altura del canvas será todo el alto de pantalla
     textIntro("¡Hola Ash! ¡Bienvenido a Iron Hack!");
-    this.trainerReady();
+    
     this.start(390, 500, "img/escenario1.png", 1);                                    // Ejecuta la función start (game loop)
     
   },
@@ -47,12 +48,19 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
       this.drawAll();                   // 2. PINTA: Ejecuta la función drawAll (pinta todo lo que hay que pintar)
       // this.moveAll();                   // 3. MUEVE: Ejecuta la función moveAll (cambia las posiciones de todo lo que hay que cambiar de lugar)
       // this.player.setListeners(this.limitUp(), this.limitRight(), this.limitDown(), this.limitLeft())
-      this.trainerApproach();
-      if (this.ready) this.trainerReady();
+      this.trainerApproach(function() {
+        this.battleInit();
+      });
+      this.player.nextScreen();
+      this.endLevel() ;
       // console.log(this.player.posX + " , " + this.player.posY )
       // if(this.framesCounter > 1000) this.framesCounter = 0;  // Creo que evita que el juego cargue una cantidad muy alta y pueda ralentizarlo
-    }, 1000/this.fps)                   // Define que el canvas se va a refrescar cada 16,6 milisegundos, es decir, 60 actualizaciones por segundo (60 fps, tasa de refresco recomendada en videojuegos )
+    }, 1000/this.fps)  
+                  // Define que el canvas se va a refrescar cada 16,6 milisegundos, es decir, 60 actualizaciones por segundo (60 fps, tasa de refresco recomendada en videojuegos )
   },
+
+  
+
 
   clear: function() {
     this.ctx.clearRect(0, 0, this.width, this.height)  // Limpia el canvas 
@@ -67,7 +75,7 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
 
   moveAll: function() {
     this.player.move(direction, this.set.limitUp, this.set.limitRight, this.set.limitDown, this.set.limitLeft,)
-    console.log("this.set.limitUp")
+    
   },
 
   trainerApproach() {
@@ -78,22 +86,41 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
           // let limit = this.player.posX + this.player.width;
   
           this.trainer.move(this.player.posX + this.player.width)
-            this.ready = true;
+          
           
           
         }
       }
     },
 
-    trainerReady() {
-      if (this.ready) {
-          setTimeout(function(){
-            console.log("error")
-              textIntro("¡Alto ahí! ¡Demuéstrame lo que has aprendido!") 
-            }, 2000);
-            this.ready = false;
+    battleInit() {
+      document.getElementById("battle").className = "visible";
+    },
+
+    endLevel() {
+      if (this.screen === 1) {
+        if (this.player.posY < 0) {
+          clearInterval(this.interval);
+          this.start(50, 450, "img/escenario2.png", 2);
+        }
       }
     }
+
+    
+      
+    }
+
+    // trainerReady() {
+    //   console.log(this.ready)
+    //   if (this.ready) {
+          
+    //         console.log("error")
+    //           textIntro("¡Alto ahí! ¡Demuéstrame lo que has aprendido!") 
+          
+    //         this.ready = false;
+           
+    //   }
+    
     
     
   
@@ -131,7 +158,6 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
 //     }
 //   }
 
-} 
 
 
 // this.limitUp = this.y + this.height;
