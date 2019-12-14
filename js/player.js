@@ -1,84 +1,158 @@
 class Player {
-    constructor(ctx, width, height, image, gameWidth, gameHeight, keys) {  // Constructor
-      this.ctx = ctx;               
-  
-      this.image = new Image();
-      this.image.src = image;
-  
-      this.posX = 700;       // Lo coloca a 700px del borde izquierdo de la pantalla
-      this.posY = 430;       // Lo coloca a 430px del borde superior de la pantalla
-     
-      this.gameWidth = gameWidth;
-      
-      this.sheetWidth = 200;    // Ancho del grid de imágenes
-      this.sheetHeight = 200;   // Alto del grid de imágenes
-      this.cols = 4;            // Número de columnas en el grid de imágenes
-      this.rows = 4;            // Número de filas en el grid de imágenes
-      this.width = sheetWidth / cols;    // El ancho de la imagen será el ancho total del grid de imágenes entre el número de columnas (es decir, el ancho de una columna)
-      this.height = sheetHeight / rows;  // El alto de la imagen será el alto total del grid de imágenes entre el número de filas (es decir, el alto de una fila)
+  constructor(ctx, x, y, image, keys) { // Constructor
+    this.ctx = ctx;
+    this.notCheck = false;
+    this.goOn = false;
+    this.listo = false;
+    this.image = new Image();
+    this.image.src = image;
+    this.framesCounter = 0;
+    this.ableToMove = false;
 
-      this.framesIndex = 0;
-  
-      this.keys = keys;       
-      this.setListeners()   // Ejecuta los listeners para detectar qué va haciendo
-    }
-  
-    draw(framesCounter) {
-      this.ctx.drawImage(       // Cada línea es un argumento de la función drawImage
-        this.image,             // La imagen
-        this.framesIndex * Math.floor(this.image.width / this.frames),   // La x
-        0,                                                               // La y
-        this.width,
-        this.height,
-        this.posX, 
-        this.posY, 
-        this.width, 
-        this.height
-        )
-        this.clearBullets()
-        this.bullets.forEach(bullet => bullet.draw())
-        this.animate(framesCounter)
-    }
-  
-    move() {
-      if(this.posY <= this.posY0) {
-        this.posY += this.vy;
-        this.vy += this.gravity;
-      } else {
-        this.vy = 1;
-        this.posY = this.posY0;
-      }
-      this.bullets.forEach(bullet => bullet.move())
-    }
-  
-    animate(framesCounter) {
-      if(framesCounter % 10 === 0) {
-        this.framesIndex++;
-  
-        if(this.framesIndex > 2) this.framesIndex = 0;
-      }
-    }
-  
-    setListeners() {
-      document.addEventListener('keydown', (e) => {
-        switch(e.keyCode) {
-          case this.keys.TOP_KEY:
-            if(this.posY >= this.posY0) {
-              this.posY -= this.vy;
-              this.vy -= 10;
-            }
-            break;
-          case this.keys.SPACE:
-            this.shoot()
-        }
-      })
-    }
-  
-    shoot() {
-      this.bullets.push(new Bullet(this.ctx, 10, this.posX, this.posY, this.width, this.height, this.posY0))
-    }
-  
-    clearBullets() {
-      this.bullets = this.bullets.filter(bullet => bullet.posX <= this.gameWidth)
+    this.posX = x; // Lo coloca a 700px del borde izquierdo de la pantalla
+    this.posY = y; // Lo coloca a 430px del borde superior de la pantalla
+
+    this.limitUp = 0;
+    this.limitRight = 750;
+    this.limitDown = 450;
+    this.limitLeft = 0;
+
+    // this.gameWidth = gameWidth;
+
+    this.currentFrame = 0; // Frame actual del grid
+    this.srcX = 0; // Posición x en el grid de imágenes
+    this.srcY = 0; // Posición y en el grid de imágenes
+    this.sheetWidth = 200; // Ancho del grid de imágenes
+    this.sheetHeight = 200; // Alto del grid de imágenes
+    this.cols = 4; // Número de columnas en el grid de imágenes
+    this.rows = 4; // Número de filas en el grid de imágenes
+    this.width = this.sheetWidth / this.cols; // El ancho de la imagen será el ancho total del grid de imágenes entre el número de columnas (es decir, el ancho de una columna)
+    this.height = this.sheetHeight / this.rows; // El alto de la imagen será el alto total del grid de imágenes entre el número de filas (es decir, el alto de una fila)
+
+    this.framesIndex = 0;
+    this.frames = 4;
+
+    this.trackDown = 0;
+    this.trackLeft = 1;
+    this.trackRight = 2;
+    this.trackUp = 3;
+    this.defaultPos = 3;
+
+    this.keys = keys;
+    this.setListeners() // Ejecuta los listeners para detectar qué va haciendo
+  }
+
+  draw(framesCounter) {
+    // this.currentFrame = ++this.currentFrame % this.cols;
+    this.srcX = this.framesIndex * Math.floor(this.image.width / this.frames);
+    this.ctx.drawImage( // Cada línea es un argumento de la función drawImage
+      this.image, // La imagen
+      this.srcX, // Posición x en el grid de imágenes
+      this.srcY, // La y
+      50,
+      50,
+      this.posX,
+      this.posY,
+      50,
+      50
+    )
+
+    this.animate(framesCounter)
+  }
+
+  animate(framesCounter) {
+    if (framesCounter % 10 === 0) {
+      this.framesIndex++;
+
+      if (this.framesIndex > 3) this.framesIndex = 0;
     }
   }
+
+  move(direction) {
+    if (this.ableToMove) {
+      if (Game.screen === 1) {
+        if (direction === "up") {
+
+          this.srcY = this.trackUp * this.height;
+          if (this.posX < 60) {
+            this.posY -= 10;
+          } if (this.posX > 60 && this.posY > 400) {
+            this.posY -= 10;
+            
+          } if (!this.notCheck) {
+            if (this.posY === 400 && this.posX > 330 && this.posX < 430) {
+              textIntro("Mejor no interrumpir la clase. Da un rodeo.");
+              this.notCheck = true;
+            }
+          } if (this.posY === 40) {
+            setTimeout(function(){ 
+              textIntro("¡Alto! Demuéstrame lo que has aprendido");
+            }, 2000);
+            setTimeout(function(){ 
+              Game.battleInit();
+            }, 5000);
+          }
+        } else if (direction === "right") {
+          this.srcY = this.trackRight * this.height;
+          if (this.posY > 390 && this.posX < this.limitRight) {
+            this.posX += 10;
+          } else if (this.posY < 390 && this.posX < 50) {
+            this.posX += 10;
+          }
+        } else if (direction === "down") {
+          this.srcY = this.trackDown * this.height;
+          if (this.posY < this.limitDown) {
+            this.posY += 10;
+          }
+        } else if (direction === "left") {
+          this.srcY = this.trackLeft * this.height;
+          if (this.posX > this.limitLeft) {
+            this.posX -= 10;
+          }
+        }
+      }
+    }
+  }
+
+
+
+  firstSteps() {
+    if (Game.framesCounter < 30) {
+      if (Game.screen === 1) {
+        this.srcY = this.trackUp * this.height;
+        this.posY -= 2;
+      }
+    }
+    this.ableToMove = true; // Recuerda igualarlo a false cuando se pase de pantalla
+  }
+
+  nextScreen() {
+
+    if (this.goOn) {
+      this.posY -= 1;
+  }
+}
+
+
+  setListeners() {
+    document.addEventListener('keydown', (e) => {
+      switch (e.keyCode) {
+        case this.keys.TOP_KEY:
+          this.move("up");
+          break;
+        case this.keys.RIGHT_KEY:
+          this.move("right");
+          break;
+        case this.keys.DOWN_KEY:
+          this.move("down");
+          break;
+        case this.keys.LEFT_KEY:
+          this.move("left");
+          break;
+      }
+
+
+    })
+  }
+
+}
