@@ -1,41 +1,31 @@
 body {
     font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+    background-image: url("../img/wallpaper8.jpg");
+    background-size: cover;
+    background-position: right;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
 }
 
-#canvas {
-    background-color: rgb(227, 227, 227);
-    /* Centrar con flex */
-    position: relative;
-}
-
-#text {
-    width: 800px;
-    background-color: #FFF;
-    border: 1px solid rgb(140, 140, 140);
-    border-radius: 10px;
-    height: 130px;
-    position: absolute;
-    top: 510px;
-    left: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-#dynamic {
-    line-height: 30px;
-}
-
+/* battle */
 #battle {
     width: 800px;
     height: 500px;
-    background: #FFF;
+    background-image: url("../img/bg-battle.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     position: absolute;
-    top: 10px;
+    top: 0px;
    z-index: 1000;
+   overflow: hidden;
 }
 
 .visible {
-    left: 10px;
+    left: 0px;
     -webkit-transition: all 2000ms ease-in-out;
 -moz-transition: all 2000ms ease-in-out;
 -ms-transition: all 2000ms ease-in-out;
@@ -44,8 +34,121 @@ transition: all 2000ms ease-in-out;
 }
 
 .novisible {
-    left: -790px;
+    left: -800px;
+   
 }
+
+.enemy-container, .pikachu-container {
+    width: 80%;
+    margin: auto;
+    height: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+
+.info, .info-pika {
+    color: #FFF;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.info {
+    /* border-left: 1px solid #FFF;
+    border-bottom: 1px solid #FFF; */
+}
+
+.info-pika {
+    text-align: right;
+    /* border-right: 1px solid #FFF;
+    border-top: 1px solid #FFF; */
+}
+
+.life-title {
+    font-size: 12px;
+}
+
+.life {
+    width: 300px;
+    height: 20px;
+    position: relative;
+}
+
+.life-bg {
+    width: 100%;
+    height: 100%;
+    background-color: #FFF;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.real-life {
+    width: 80%;
+    height: 100%;
+    background-color: #3AAA35;
+    position: absolute;
+    top: 0px;
+    
+    z-index: 1000;
+}
+
+.rf-enemy {
+    left: 0px;
+}
+
+.rf-pika {
+ right: 0px;
+}
+
+.pokemon-img {
+    width: 200px;
+    height: auto;
+}
+
+
+/* map */
+.container-game {
+    position: relative;
+    width: 800px;
+    height: 630px;
+    left: 50%;
+    top: 50%;
+    margin-left: -400px;
+   margin-top: -315px;
+    overflow: hidden;
+}
+
+#canvas {
+    background-color: rgb(227, 227, 227);
+    /* Centrar con flex */
+    position: absolute;
+    left: 0px;
+ 
+    top: 0px;
+}
+
+#text {
+    width: 800px;
+    background-color: #FFF;
+    border: 1px solid rgb(140, 140, 140);
+    border-radius: 10px;
+    height: 130px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: auto;
+    position: absolute;
+    top: 500px;
+    left: 0px;
+}
+
+#dynamic {
+    line-height: 30px;
+}
+
+
 
 .invisible {
     display: none;

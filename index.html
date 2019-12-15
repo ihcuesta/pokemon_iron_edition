@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/pikachu.js"></script>
+    <script src="js/enemy.js"></script>
     <script src="js/battle.js"></script>
     <script src="js/trainer.js"></script>
     <script src="js/text.js"></script>
@@ -17,17 +19,54 @@
     <script src="js/index.js"></script>
 </head>
 <body>
-    <canvas id="canvas" id="canvas"></canvas>
-    <div id="text">
-        <p id="dynamic"></p>
+    <div class="container-game">
+            <canvas id="canvas" id="canvas">
+            </canvas>
+                <div id="battle" class="novisible">
+                    <div class="enemy-container">
+                        <div class="info">
+                            <h2>Charizard</h2>
+                            <div class="life">
+                                <div class="life-bg"></div>
+                                <div class="real-life rf-enemy"></div>
+                            </div>
+                            <div class="data-life">
+                                <h2><span class="life-title">LIFE </span><span id="life-enemy"></span>/100</h2>
+                            </div>
+                        </div>
+                        <div class="pokemon">
+                            <img class="pokemon-img" src="img/charizard.gif" alt="">
+                        </div>
+                    </div>
+                    <div class="pikachu-container">
+                        <div class="pokemon">
+                            <img class="pokemon-img" src="img/pikachu_gif.gif" alt="">
+                        </div>
+                        <div class="info-pika">
+                            <h2>Pikachu</h2>
+                            <div class="life">
+                                <div class="life-bg"></div>
+                                <div class="real-life rf-pika"></div>
+                            </div>
+                            <div class="data-life">
+                                <h2><span class="life-title">LIFE </span><span id="life-pikachu"></span>/100</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="continue1">CONTINUAR</button>
+                </div>
+                <div id="text">
+                    <p id="dynamic"></p>
+                </div>
+                
+                <div id="youwin">
+                    <h1>¡Has ganado!</h1>
+                    <img src="img/youwin.gif" width="450" height="270" alt="">
+                    <button id="replay">JUGAR DE NUEVO</button>
+                </div>
     </div>
-    <div id="battle" class="novisible">
-        <button id="continue1">CONTINUAR</button>
-    </div>
-    <div id="youwin">
-        <h1>¡Has ganado!</h1>
-        <img src="img/youwin.gif" width="450" height="270" alt="">
-        <button id="replay">JUGAR DE NUEVO</button>
-    </div>
+  
+
 </body>
 </html>

@@ -192,7 +192,8 @@ activeBattle() {
     textIntro("¡Alto! Demuéstrame lo que has aprendido");
   }, 2000);
   setTimeout(function () {
-    document.getElementById("battle").className = "visible";
+    
+    battle();
   }, 5000);
 }
 
