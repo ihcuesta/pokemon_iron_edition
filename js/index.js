@@ -1,5 +1,5 @@
 window.onload = function() {  // Una vez la ventana está cargada, 
-  document.getElementById("continue1").addEventListener("click", function(){
+  document.getElementById("continue").addEventListener("click", function(){
     document.getElementById("battle").className = "novisible";
     Game.player.goOn = true;
     Game.trainer.posX += 0;

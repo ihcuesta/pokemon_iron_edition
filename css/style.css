@@ -1,3 +1,17 @@
+@keyframes damage {
+    0% {left: 30px;}
+    20% {left: -30px;}
+    40% {left: 30px;}
+    60% {left: -30px;}
+    80% {left: 30px;}
+    100% {left: 0px;}
+}
+
+@keyframes opacity {
+    0% {opacity: 100;}
+    100% {opacity: 0;}
+}
+
 body {
     font-family: 'Press Start 2P', cursive;
     margin: 0;
@@ -20,7 +34,7 @@ body {
     background-position: center;
     position: absolute;
     top: 0px;
-   z-index: 1000;
+   z-index: 800;
    overflow: hidden;
 }
 
@@ -47,6 +61,12 @@ transition: all 2000ms ease-in-out;
     justify-content: space-between;
     padding-top: 20px;
     box-sizing: border-box;
+}
+
+#pikachu-img {
+    position: relative;
+    top: -30px;
+    left: 0px;
 }
 
 .info, .info-pika {
@@ -86,7 +106,11 @@ transition: all 2000ms ease-in-out;
 }
 
 .real-life {
-    width: 80%;
+    -webkit-transition: all 1000ms ease-in-out;
+-moz-transition: all 1000ms ease-in-out;
+-ms-transition: all 1000ms ease-in-out;
+-o-transition: all 1000ms ease-in-out;
+transition: all 1000ms ease-in-out;
     height: 100%;
     background-color: #3AAA35;
     position: absolute;
@@ -95,17 +119,71 @@ transition: all 2000ms ease-in-out;
     z-index: 1000;
 }
 
-.rf-enemy {
+#rf-enemy {
     left: 0px;
 }
 
-.rf-pika {
+#rf-pika {
  right: 0px;
 }
 
-.pokemon-img {
+.pokemon {    
+position: relative;
+}
+
+#pokemon-img, .pikachu-img {
     width: 200px;
     height: auto;
+}
+
+#pokemon-img-attack {
+    width: 270px;
+}
+
+#pokemon-img-attack {
+    display: none;
+    height: auto;
+}
+
+#thunder {
+    width: 50px;
+    height: auto;
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    display: none;
+}
+
+#buttons {
+    width: 780px;
+    margin: auto;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.attack-option {
+    width: 385px;
+    height: 50px;
+    border-radius: 20px;
+    background: #00607e;
+    color: white;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    line-height: 18px;
+}
+
+#continue, #attackBtn {
+    display: none;
+    width: 385px;
+    height: 50px;
+    border-radius: 20px;
+    background: #00607e;
+    color: white;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
 }
 
 
@@ -164,9 +242,29 @@ transition: all 2000ms ease-in-out;
     margin-top: -230px;
     background: #61cdef;
     display: none;
+    z-index: 1000;
 }
 
-#youwin img {
+#gameover {
+    width: 540px;
+    height: 460px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -270px;
+    margin-top: -230px;
+    background: #1f5327;
+    display: none;
+    z-index: 1000;
+}
+
+#gameover h1 {
+    color: yellow;
+    font-size: 35px;
+    text-align: center;;
+}
+
+#youwin img, #gameover img {
     display: block; 
     margin: auto;
 }
@@ -174,10 +272,10 @@ transition: all 2000ms ease-in-out;
 #youwin h1 {
     color: red;
     font-size: 40px;
-    text-align: center;;
+    text-align: center;
 }
 
-#youwin button {
+#youwin button, #gameover button {
     display: block; 
     margin: auto;
     padding: 10px;
@@ -190,6 +288,6 @@ transition: all 2000ms ease-in-out;
     cursor: pointer;
 }
 
-#youwin button:hover {
+#youwin button:hover, #gameover button:hover {
     background: #ffd800;
 }
