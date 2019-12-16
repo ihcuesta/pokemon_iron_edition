@@ -183,10 +183,6 @@ class Player {
     }
   }
 
-
-
-
-
 activeBattle() {
   setTimeout(function () {
     textIntro("¡Alto! Demuéstrame lo que has aprendido");
@@ -196,7 +192,6 @@ activeBattle() {
     battle();
   }, 5000);
 }
-
 
 firstSteps() {
   if (Game.framesCounter < 30) {

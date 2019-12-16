@@ -1,8 +1,8 @@
 class Enemy {
-    constructor(name, attack, image) {
+    constructor(name, image, imageAttack) {
         this.name = name,
-        this.attack = attack,
         this.image = image,
+        this.imageAttack = imageAttack,
         this.life = 100,
         this.lifeBar = 300,
         this.damage = 34,
