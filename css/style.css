@@ -7,6 +7,15 @@
     100% {left: 0px;}
 }
 
+@keyframes thunderShock {
+    0% {left: 0px; top: 0px;}
+    20% {left: 25px; top: 25px;}
+    40% {left: -25px; top: -25px;}
+    60% {left: 25px; top: 25px;;}
+    80% {left: -25px; top: -25px;}
+    100% {left: 0px;}
+}
+
 @keyframes opacity {
     0% {opacity: 100;}
     100% {opacity: 0;}
@@ -61,6 +70,12 @@ transition: all 2000ms ease-in-out;
     justify-content: space-between;
     padding-top: 20px;
     box-sizing: border-box;
+}
+
+#pokemon-img {
+    position: relative;
+    top: 0px;
+    left: 0px;
 }
 
 #pikachu-img {
@@ -135,6 +150,8 @@ position: relative;
     width: 200px;
     height: auto;
 }
+
+
 
 #pokemon-img-attack {
     width: 270px;
