@@ -1,5 +1,9 @@
-function battle(name, image, imageAttack) {
-    let screen = 1;  // Eliminar en versión definitiva
+function battle(name, image, imageAttack, screen) {
+    document.getElementById("pokemon-img").style.animation = "none";
+    document.getElementById("pokemon-img-attack").style.animation = "none";
+    document.getElementById("pokemon-img").style.display = "block";
+   
+    // let screen = 2;  // Eliminar en versión definitiva
     let n = 0;
 
     let optionsBattle1 = [
@@ -37,6 +41,10 @@ function battle(name, image, imageAttack) {
         [
             {text: "Con position fixed, el elemento es relativo al viewport", cat: "good"},
             {text: "Con position fixed, el elemento es relativo al body", cat: "bad"} 
+        ],
+        [
+            {text: "x", cat: "good"},
+            {text: "x", cat: "bad"} 
         ]
     ];
 
@@ -81,7 +89,7 @@ function battle(name, image, imageAttack) {
             n++;
          }
          if (screen === 3) {
-            let options = optionsBattle2[n];
+            let options = optionsBattle3[n];
             document.getElementById("opt1").innerText = options[0].text;
             document.getElementById("opt1").dataset.cat = options[0].cat;
             document.getElementById("opt2").innerText = options[1].text;
@@ -107,25 +115,21 @@ function battle(name, image, imageAttack) {
 
     pikachuShift();
 
-    document.getElementById("attackBtn").addEventListener("click", function () {
+    document.getElementById("attackBtn").onclick = function () {
         pikachuShift();
-    });
-
-    document.getElementById("continue").addEventListener("click", function () {
-        pikachuShift();
-    });
+    };
 
 
     let opt1 = document.getElementById("opt1");
     let opt2 = document.getElementById("opt2");
 
-    opt1.addEventListener("click", function () {
-       pikachuAction(opt1);  
-    });
+    document.getElementById("opt1").onclick = function () {
+        pikachuAction(opt1);
+    };
 
-    opt2.addEventListener("click", function () {
-        pikachuAction(opt2); 
-    });
+    document.getElementById("opt2").onclick = function () {
+        pikachuAction(opt2);
+    };
 
     function pikachuAction(opt) {
         if (opt.dataset.cat === "good") {
@@ -161,7 +165,7 @@ function battle(name, image, imageAttack) {
             let interval1 = setTimeout(() => {
                 enemyAttack();
 
-            }, 5000);
+            }, 3000);
         }
 
         let interval2 = setTimeout(() => {
@@ -178,6 +182,8 @@ function battle(name, image, imageAttack) {
         if (pikachu.life === 0) {
             let interval3 = setTimeout(() => {
                 document.getElementById("gameover").style.display = "block";
+                exit = true;
+                console.log(exit)
             }, 3000);
         }
         if (pokemon.life === 0) {
@@ -188,6 +194,7 @@ function battle(name, image, imageAttack) {
                 document.getElementById("rf-pika").style.width = pikachu.lifeBar + "px";
                 document.getElementById("life-pikachu").innerText = pikachu.life;
                 document.getElementById("continue").style.display = "block";
+                
             }, 4000);
 
             let interval4 = setTimeout(() => {
@@ -195,6 +202,7 @@ function battle(name, image, imageAttack) {
                 document.getElementById("pokemon-img").style.display = "none";
                 document.getElementById("pokemon-img-attack").style.animation = "opacity 3s 1";
                 document.getElementById("pokemon-img-attack").style.display = "none";
+                exit = true;
             }, 6000);
         }
     }
@@ -234,10 +242,5 @@ function battle(name, image, imageAttack) {
         document.getElementById("pikachu-img").style.animation = "damage 1s 1";
     }
 
-    document.getElementById("continue").addEventListener("click", function(){
-        document.getElementById("battle").className = "novisible";
-        Game.player.goOn = true;
-        Game.trainer.posX += 0;
-        Game.trainer.posY += 0;
-      });
 }
+

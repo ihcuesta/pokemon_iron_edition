@@ -88,7 +88,7 @@ class Player {
             }
           }
           if (this.posY === 40) {
-            this.activeBattle();
+            this.activeBattle("Charizard", "img/charizard.gif", "img/charizard-2.gif", 1);
           }
         } else if (direction === "right") {
           this.srcY = this.trackRight * this.height;
@@ -126,7 +126,7 @@ class Player {
             this.posX += 10;
           }
           if (this.posX === 560) {
-            this.activeBattle();
+            this.activeBattle("Blastoise", "img/b.gif", "img/b-2.gif", 2);
 
           }
 
@@ -162,7 +162,7 @@ class Player {
           }
         
           if (this.posX === 360) {
-            this.activeBattle();
+            this.activeBattle("Raichu", "img/r.gif", "img/r-2.gif", 3);
 
           }
 
@@ -183,14 +183,14 @@ class Player {
     }
   }
 
-activeBattle() {
+activeBattle(name, image, imageAttack, screen) {
   setTimeout(function () {
     textIntro("¡Alto! Demuéstrame lo que has aprendido");
-  }, 2000);
+  }, 1000);
   setTimeout(function () {
     
-    battle();
-  }, 5000);
+    battle(name, image, imageAttack, screen);
+  }, 3000);
 }
 
 firstSteps() {
@@ -198,10 +198,15 @@ firstSteps() {
     if (Game.screen === 1) {
       this.srcY = this.trackUp * this.height;
       this.posY -= 2;
+      
     }
     if (Game.screen === 2) {
       this.srcY = this.trackUp * this.height;
       this.posY -= 2;
+      if (this.posY === 442) {
+        textIntro("¡Bien hecho Ash! Encuentra tu clase.")
+      }
+      
     }
     if (Game.screen === 3) {
       this.srcY = this.trackRight * this.height;

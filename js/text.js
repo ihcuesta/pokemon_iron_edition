@@ -3,7 +3,7 @@ function textIntro(text) {
     writer.length = 0; //Limpiar el string
     var maxLength = text.length;
     var count = 0;
-    var speed = 3000 / maxLength; //La velocidad varía dependiendo de la cantidad de caracteres
+    var speed = 1000 / maxLength; //La velocidad varía dependiendo de la cantidad de caracteres
 
     var write = setInterval(function () {
 
@@ -16,5 +16,4 @@ function textIntro(text) {
         count++;
 
     }, speed);
-
-   }
+}
