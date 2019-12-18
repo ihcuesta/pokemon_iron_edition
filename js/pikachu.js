@@ -3,7 +3,7 @@ class Pikachu {
         this.name = "Pikachu",
         this.life = 100,
         this.lifeBar = 300,
-        this.damage = 25,
+        this.damage = 20,
         this.damageBar = 300 * this.damage / 100
 
         // this.attacks = [
