@@ -1,4 +1,4 @@
-let player;
+
 function textIntro(text) {
     var writer = "";
     writer.length = 0; //Limpiar el string

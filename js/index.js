@@ -9,6 +9,18 @@ window.onload = function() {  // Una vez la ventana está cargada,
   // var playPromise = audio.play();
   // document.getElementById("opening-audio").play();
   // document.getElementById('opening-audio').muted = false;
+ 
+  document.getElementById("start-game").onclick = function () {
+    document.getElementById("start-screen").style.top = "-630px";
+    document.getElementById("screen1-audio").play();
+    document.getElementById("text").style.display = "block";
+    let name = document.getElementById("player").value;
+    if (name === "") {
+      name = "Ash";
+    }
+    Game.init(name);
+  };
+
   document.getElementById("continue").onclick = function () {
     if (Game.screen === 3) {
       setTimeout(() => {
@@ -49,7 +61,7 @@ window.onload = function() {  // Una vez la ventana está cargada,
    // Mejor añadir un paso previo que sea un botón start para ejecutar la función init()
     
    
-   Game.init()                 // cambios hechos para tocar el diseño de battle
+                 // cambios hechos para tocar el diseño de battle
     // battle("Blastoise", "img/r.gif", "img/r-2.gif");                     // cambios hechos para tocar el diseño de battle
   }
 
