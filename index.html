@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/audio.js"></script>
     <script src="js/pikachu.js"></script>
     <script src="js/enemy.js"></script>
     <script src="js/battle.js"></script>
@@ -21,6 +22,15 @@
 </head>
 
 <body>
+    <audio id="opening-audio" src="audio/opening.mp3"></audio>
+    <audio id="screen1-audio" src="audio/screen1.mp3"></audio>
+    <audio id="screen2-audio" src="audio/screen2.mp3"></audio>
+    <audio id="screen3-audio" src="audio/screen3.mp3"></audio>
+    <audio id="battle1-audio" src="audio/battle.mp3"></audio>
+    <audio id="battle2-audio" src="audio/battle.mp3"></audio>
+    <audio id="battle3-audio" src="audio/battle.mp3"></audio>
+    <audio id="victory-audio" src="audio/victory.mp3"></audio>
+
     <div class="container-game">
         <canvas id="canvas" id="canvas">
         </canvas>
@@ -77,7 +87,7 @@
         <div id="youwin">
             <h1>¡Has ganado!</h1>
             <img src="img/youwin.gif" width="450" height="270" alt="">
-            <button id="replay">JUGAR DE NUEVO</button>
+            <button id="replay2">JUGAR DE NUEVO</button>
         </div>
     </div>
 

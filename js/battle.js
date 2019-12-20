@@ -145,7 +145,8 @@ function battle(name, image, imageAttack, screen) {
         
         if (pokemon.life > 0 && pikachu.life > 0) {
             enemyShift();
-        } else if (pokemon.life === 0) {
+        }
+        if (pokemon.life === 0 || pikachu.life === 0) {
             resolveBattle();
         }
     }
@@ -187,7 +188,10 @@ function battle(name, image, imageAttack, screen) {
             }, 3000);
         }
         if (pokemon.life === 0) {
+            
+           
             setTimeout(() => {
+                
                 textIntro("¡Has ganado! Pikachu recibió poción.");
                 pikachu.life = 100;
                 pikachu.lifeBar = 300;

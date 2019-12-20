@@ -39,10 +39,11 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
     this.trainer = new Trainer(this.ctx, trainerName, trainerX, trainerY, trainerImage)
     this.set = new Set(this.ctx, setImage);
     this.player = new Player(this.ctx, playerX, playerY, 'img/ashframes2.png', this.playerKeys, this.screen); // Crea un nuevo personaje                        // Ejecuta la función reset, que reinicia el juego pintando los valores de inicio del fondo, el jugador, los obstaculos y el marcador.
-    
+   
     this.interval = setInterval(() => { // En este intervalo se irán actualizando los frames
       this.player.firstSteps();
       this.framesCounter++;             // Aumenta un frame al contador de frames
+this.player.activeSoundBattle();
 
       this.clear();                     // 1. LIMPIA: Ejecuta la función clear (limpia el canvas)
       this.drawAll();                   // 2. PINTA: Ejecuta la función drawAll (pinta todo lo que hay que pintar)
@@ -76,6 +77,8 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
     
   },
 
+ 
+
   trainerApproach(limit) {
     
       if (this.screen === 1) {
@@ -90,6 +93,7 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
         }
       }
       if (this.screen === 2) {
+        
         if (this.player.posX > 550) {
           this.player.ableToMove = false;
           // let limit = this.player.posX + this.player.width;
@@ -102,6 +106,7 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
       }
 
       if (this.screen === 3) {
+        
         if (this.player.posX > 370) {
           this.player.ableToMove = false;
           // let limit = this.player.posX + this.player.width;
@@ -117,8 +122,10 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
    
 
     endLevel() {
+    
       if (this.screen === 1) {
         if (this.player.posY < 0) {
+          
           clearInterval(this.interval);
           this.framesCounter = 0;
           this.start(50, 500, "img/escenario2.png", 2, "Trainer 2", 560, 170, "img/trainer2.png");
@@ -126,6 +133,7 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
       }  
       if (this.screen === 2) {
         if (this.player.posY < 0) {
+          
           clearInterval(this.interval);
           this.framesCounter = 0;
           this.start(-50, 300, "img/escenario3.png", 3, "Trainer 3", 500, 280, "img/trainer3.png");
@@ -133,6 +141,7 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
       }
 
       if (this.screen === 3) {
+        
         this.srcY = this.trackDown * this.height;
       }
     }
