@@ -1,5 +1,5 @@
 class Player {
-  constructor(ctx, x, y, image, keys) { // Constructor
+  constructor(ctx, x, y, image, keys, name) { // Constructor
     this.ctx = ctx;
     this.notCheck = false;
     this.goOn = false;
@@ -9,6 +9,7 @@ class Player {
     this.framesCounter = 0;
     this.ableToMove = false;
    this.soundBattle = false;
+   this.name = name;
 
     this.posX = x; // Lo coloca a 700px del borde izquierdo de la pantalla
     this.posY = y; // Lo coloca a 430px del borde superior de la pantalla
@@ -159,11 +160,14 @@ class Player {
         }
         if (direction === "right") {
           this.srcY = this.trackRight * this.height;
-          if (this.posX < 380) {
+          if (this.posY < 310) {
+            this.posX += 10;
+          }
+          if (this.posY > 310 && this.posX < 350) {
             this.posX += 10;
           }
         
-          if (this.posX > 375) {
+          if (this.posX > 475) {
             this.activeBattle("Raichu", "img/r.gif", "img/r-2.gif", 3);
             this.soundBattle = true;
           }
@@ -171,7 +175,10 @@ class Player {
 
         } else if (direction === "down") {
           this.srcY = this.trackDown * this.height;
-          if (this.posY < 380) {
+          if (this.posX < 350 && this.posY < 380) {
+            this.posY += 10;
+          }
+          if (this.posX > 350 && this.posY < 300) {
             this.posY += 10;
           }
 
@@ -187,16 +194,25 @@ class Player {
 
 activeBattle(name, image, imageAttack, screen) {
   
-  setTimeout(function () {
-    textIntro("¡Alto! Demuéstrame lo que has aprendido");
-  }, 1000);
+  // setTimeout(function () {
+    if (Game.screen === 1) {
+      textIntro("¡Alto! Demuéstrame lo que has aprendido.");
+    }
+    if (Game.screen === 2) {
+      textIntro("¡Quieto! ¡Pokemons display block!");
+    }
+    if (Game.screen === 3) {
+      textIntro("¿Preparado para el módulo 2?");
+    }
+    
+  // }, 500);
   setTimeout(function () {
     
     battle(name, image, imageAttack, screen);
   }, 3000);
 }
 
-firstSteps() {
+firstSteps(name) {
   if (Game.framesCounter < 30) {
     if (Game.screen === 1) {
       this.srcY = this.trackUp * this.height;
@@ -208,7 +224,7 @@ firstSteps() {
       this.srcY = this.trackUp * this.height;
       this.posY -= 2;
       if (this.posY === 442) {
-        textIntro("¡Bien hecho Ash! Encuentra tu clase.")
+        textIntro("¡Bien hecho " + name + "! Encuentra tu clase.")
       }
       
     }
@@ -216,6 +232,9 @@ firstSteps() {
       
       this.srcY = this.trackRight * this.height;
       this.posX += 2;
+      if (this.posX === 40) {
+        textIntro("¡Bien peleado " + name + "! ¡Último nivel!")
+      }
     }
   }
   this.ableToMove = true; // Recuerda igualarlo a false cuando se pase de pantalla
@@ -246,7 +265,7 @@ approach() {
     return this.posY + this.height;
   }
   if (Game.screen === 3) {
-    return this.posX + this.height;
+    return this.posY + this.height;
   }
 }
 
@@ -258,7 +277,7 @@ setListeners() {
         this.move("up");
         if (Game.screen === 1) {
           if (this.posY > 35) {
-            document.getElementById("screen1-audio").play();
+            
           }
         } 
         if (Game.screen === 2) {

@@ -17,7 +17,7 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
     // score: 0,
 
     // La función init es lo primero que se ejecuta una vez se ha cargado la página en index.js
-  init: function() { 
+  init: function(name) { 
     this.canvas = document.getElementById('canvas'); // guarda en una variable el selector de la etiqueta canvas
     this.ctx = this.canvas.getContext('2d');         // en 2D
     this.width = 800;                  // a la propiedad width de Game le asigna todo el ancho de pantalla
@@ -25,23 +25,23 @@ const Game = {          // ¿POR QUÉ CONST Y NO CLASS?
     this.canvas.width = this.width;                  // la anchura del canvas será todo el ancho de pantalla
     this.canvas.height = this.height;   
                 // la altura del canvas será todo el alto de pantalla
-    textIntro("¡Hola Ash! ¡Bienvenido a Iron Hack!");
     
-    this.start(390, 500, "img/escenario1.png", 1, "Trainer 1", 200, 30, "img/trainer.png");                                    // Ejecuta la función start (game loop)
     
+    this.start(390, 500, "img/escenario1.png", 1, "Trainer 1", 200, 30, "img/trainer.png", name);                                    // Ejecuta la función start (game loop)
+    textIntro("¡Hola " + name + "! ¡Bienvenido a Iron Hack!");
   },
 
   // La función start es el game loop (update o bucle de renderizado), refresca el canvas mediante un setInterval para detectar movimiento
-  start: function(playerX, playerY, setImage, screen, trainerName, trainerX, trainerY, trainerImage) {
+  start: function(playerX, playerY, setImage, screen, trainerName, trainerX, trainerY, trainerImage, name) {
     this.screen = screen;
     
     
     this.trainer = new Trainer(this.ctx, trainerName, trainerX, trainerY, trainerImage)
     this.set = new Set(this.ctx, setImage);
-    this.player = new Player(this.ctx, playerX, playerY, 'img/ashframes2.png', this.playerKeys, this.screen); // Crea un nuevo personaje                        // Ejecuta la función reset, que reinicia el juego pintando los valores de inicio del fondo, el jugador, los obstaculos y el marcador.
+    this.player = new Player(this.ctx, playerX, playerY, 'img/ashframes2.png', this.playerKeys, name); // Crea un nuevo personaje                        // Ejecuta la función reset, que reinicia el juego pintando los valores de inicio del fondo, el jugador, los obstaculos y el marcador.
    
     this.interval = setInterval(() => { // En este intervalo se irán actualizando los frames
-      this.player.firstSteps();
+      this.player.firstSteps(name);
       this.framesCounter++;             // Aumenta un frame al contador de frames
 this.player.activeSoundBattle();
 
@@ -51,7 +51,7 @@ this.player.activeSoundBattle();
       // this.player.setListeners(this.limitUp(), this.limitRight(), this.limitDown(), this.limitLeft())
       this.trainerApproach();
       this.player.nextScreen();
-      this.endLevel() ;
+      this.endLevel(name) ;
       console.log(this.player.posX + " , " + this.player.posY )
       // if(this.framesCounter > 1000) this.framesCounter = 0;  // Creo que evita que el juego cargue una cantidad muy alta y pueda ralentizarlo
     }, 1000/this.fps)  
@@ -107,7 +107,7 @@ this.player.activeSoundBattle();
 
       if (this.screen === 3) {
         
-        if (this.player.posX > 370) {
+        if (this.player.posX > 475) {
           this.player.ableToMove = false;
           // let limit = this.player.posX + this.player.width;
   
@@ -121,14 +121,15 @@ this.player.activeSoundBattle();
 
    
 
-    endLevel() {
+    endLevel(name) {
     
       if (this.screen === 1) {
         if (this.player.posY < 0) {
           
           clearInterval(this.interval);
           this.framesCounter = 0;
-          this.start(50, 500, "img/escenario2.png", 2, "Trainer 2", 560, 170, "img/trainer2.png");
+          this.start(50, 500, "img/escenario2.png", 2, "Trainer 2", 560, 170, "img/trainer2.png", name);
+          console.log(this.player.name)
         }
       }  
       if (this.screen === 2) {
@@ -136,7 +137,7 @@ this.player.activeSoundBattle();
           
           clearInterval(this.interval);
           this.framesCounter = 0;
-          this.start(-50, 300, "img/escenario3.png", 3, "Trainer 3", 500, 280, "img/trainer3.png");
+          this.start(-50, 300, "img/escenario3.png", 3, "Trainer 3", 480, 380, "img/trainer3.png", name);
         }
       }
 
