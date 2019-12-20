@@ -8,6 +8,7 @@ class Player {
     this.image.src = image;
     this.framesCounter = 0;
     this.ableToMove = false;
+   this.soundBattle = false;
 
     this.posX = x; // Lo coloca a 700px del borde izquierdo de la pantalla
     this.posY = y; // Lo coloca a 430px del borde superior de la pantalla
@@ -87,8 +88,9 @@ class Player {
               this.notCheck = true;
             }
           }
-          if (this.posY === 40) {
+          if (this.posY < 35) {
             this.activeBattle("Charizard", "img/charizard.gif", "img/charizard-2.gif", 1);
+            this.soundBattle = true;
           }
         } else if (direction === "right") {
           this.srcY = this.trackRight * this.height;
@@ -125,9 +127,9 @@ class Player {
           if (this.posY > 100 && this.posX < 60) {
             this.posX += 10;
           }
-          if (this.posX === 560) {
+          if (this.posX > 555) {
             this.activeBattle("Blastoise", "img/b.gif", "img/b-2.gif", 2);
-
+            this.soundBattle = true;
           }
 
 
@@ -161,9 +163,9 @@ class Player {
             this.posX += 10;
           }
         
-          if (this.posX === 360) {
+          if (this.posX > 375) {
             this.activeBattle("Raichu", "img/r.gif", "img/r-2.gif", 3);
-
+            this.soundBattle = true;
           }
 
 
@@ -184,6 +186,7 @@ class Player {
   }
 
 activeBattle(name, image, imageAttack, screen) {
+  
   setTimeout(function () {
     textIntro("¡Alto! Demuéstrame lo que has aprendido");
   }, 1000);
@@ -201,6 +204,7 @@ firstSteps() {
       
     }
     if (Game.screen === 2) {
+     
       this.srcY = this.trackUp * this.height;
       this.posY -= 2;
       if (this.posY === 442) {
@@ -209,6 +213,7 @@ firstSteps() {
       
     }
     if (Game.screen === 3) {
+      
       this.srcY = this.trackRight * this.height;
       this.posX += 2;
     }
@@ -251,9 +256,26 @@ setListeners() {
     switch (e.keyCode) {
       case this.keys.TOP_KEY:
         this.move("up");
+        if (Game.screen === 1) {
+          if (this.posY > 35) {
+            document.getElementById("screen1-audio").play();
+          }
+        } 
+        if (Game.screen === 2) {
+         
+            document.getElementById("screen2-audio").play();
+          
+        } 
         break;
       case this.keys.RIGHT_KEY:
         this.move("right");
+        
+      
+        if (Game.screen === 3) {
+         
+            document.getElementById("screen3-audio").play();
+        
+        }
         break;
       case this.keys.DOWN_KEY:
         this.move("down");
@@ -265,6 +287,40 @@ setListeners() {
 
 
   })
+}
+
+activeSoundBattle() {
+if (this.soundBattle) {
+  if (Game.screen === 1) {
+    document.getElementById("screen1-audio").pause();
+    document.getElementById("battle1-audio").play();
+  }
+  if (Game.screen === 2) {
+    document.getElementById("screen2-audio").pause();
+    document.getElementById("battle2-audio").play();
+  }
+  if (Game.screen === 3) {
+    document.getElementById("screen3-audio").pause();
+    document.getElementById("battle3-audio").play();
+  }
+ 
+}
+}
+
+activeSoundVictory() {
+  if (!this.soundBattle) {
+    if (Game.screen === 1) {
+      document.getElementById("battle1-audio").pause();
+    }
+    if (Game.screen === 2) {
+      document.getElementById("battle2-audio").pause();
+    }
+    if (Game.screen === 3) {
+      document.getElementById("battle3-audio").pause();
+      document.getElementById("victory-audio").play();
+    }
+  
+  }
 }
 
 }
