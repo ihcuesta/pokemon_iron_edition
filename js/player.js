@@ -10,6 +10,7 @@ class Player {
     this.ableToMove = false;
    this.soundBattle = false;
    this.name = name;
+   this.moving = false;
 
     this.posX = x; // Lo coloca a 700px del borde izquierdo de la pantalla
     this.posY = y; // Lo coloca a 430px del borde superior de la pantalla
@@ -58,8 +59,10 @@ class Player {
       50,
       50
     )
-
-    this.animate(framesCounter)
+if (this.moving) {
+  this.animate(framesCounter)
+}
+   
   }
 
   animate(framesCounter) {
@@ -67,6 +70,7 @@ class Player {
       this.framesIndex++;
 
       if (this.framesIndex > 3) this.framesIndex = 0;
+      this.moving = false;
     }
   }
 
@@ -74,7 +78,7 @@ class Player {
     if (this.ableToMove) {
       if (Game.screen === 1) {
         if (direction === "up") {
-
+          this.moving = true;
           this.srcY = this.trackUp * this.height;
           if (this.posX < 60) {
             this.posY -= 10;
@@ -94,6 +98,7 @@ class Player {
             this.soundBattle = true;
           }
         } else if (direction === "right") {
+          this.moving = true;
           this.srcY = this.trackRight * this.height;
           if (this.posY > 390 && this.posX < this.limitRight) {
             this.posX += 10;
@@ -101,11 +106,13 @@ class Player {
             this.posX += 10;
           }
         } else if (direction === "down") {
+          this.moving = true;
           this.srcY = this.trackDown * this.height;
           if (this.posY < this.limitDown) {
             this.posY += 10;
           }
         } else if (direction === "left") {
+          this.moving = true;
           this.srcY = this.trackLeft * this.height;
           if (this.posX > this.limitLeft) {
             this.posX -= 10;
@@ -115,12 +122,14 @@ class Player {
 
       if (Game.screen === 2) {
         if (direction === "up") {
+          this.moving = true;
           this.srcY = this.trackUp * this.height;
           if (this.posY > 30) {
             this.posY -= 10;
           }
         }
         if (direction === "right") {
+          this.moving = true;
           this.srcY = this.trackRight * this.height;
           if (this.posY < 100 && this.posX < this.limitRight) {
             this.posX += 10;
@@ -135,6 +144,7 @@ class Player {
 
 
         } else if (direction === "down") {
+          this.moving = true;
           this.srcY = this.trackDown * this.height;
           if (this.posX > 60 && this.posY < 90) {
             this.posY += 10;
@@ -144,6 +154,7 @@ class Player {
           }
 
         } else if (direction === "left") {
+          this.moving = true;
           this.srcY = this.trackLeft * this.height;
           if (this.posX > this.limitLeft) {
             this.posX -= 10;
@@ -153,12 +164,14 @@ class Player {
 
       if (Game.screen === 3) {
         if (direction === "up") {
+          this.moving = true;
           this.srcY = this.trackUp * this.height;
           if (this.posY > 280) {
             this.posY -= 10;
           }
         }
         if (direction === "right") {
+          this.moving = true;
           this.srcY = this.trackRight * this.height;
           if (this.posY < 310) {
             this.posX += 10;
@@ -174,6 +187,7 @@ class Player {
 
 
         } else if (direction === "down") {
+          this.moving = true;
           this.srcY = this.trackDown * this.height;
           if (this.posX < 350 && this.posY < 380) {
             this.posY += 10;
@@ -183,6 +197,7 @@ class Player {
           }
 
         } else if (direction === "left") {
+          this.moving = true;
           this.srcY = this.trackLeft * this.height;
           if (this.posX > this.limitLeft) {
             this.posX -= 10;
@@ -243,6 +258,7 @@ firstSteps(name) {
 nextScreen() {
 if (Game.screen === 1 || Game.screen === 2) {
   if (this.goOn) {
+    this.moving = true;
     this.srcY = this.trackUp * this.height;
     this.posY -= 1;
   }

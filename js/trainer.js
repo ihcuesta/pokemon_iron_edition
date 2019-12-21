@@ -58,17 +58,23 @@ class Trainer {
     if (Game.screen === 1) {
       if (this.posX > limit) {
         this.posX -= 2;
+      } else {
+        this.active = false;
       }
     }
     if (Game.screen === 2) {
       if (this.posY > limit) {
         this.posY -= 2;
+      } else {
+        this.active = false;
       }
     }
 
     if (Game.screen === 3) {
       if (this.posY > limit) {
         this.posY -= 2;
+      } else {
+        this.active = false;
       }
     }
   }
