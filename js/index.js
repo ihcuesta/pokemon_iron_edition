@@ -9,7 +9,7 @@ window.onload = function() {  // Una vez la ventana está cargada,
   // var playPromise = audio.play();
   // document.getElementById("opening-audio").play();
   // document.getElementById('opening-audio').muted = false;
- 
+
   document.getElementById("start-game").onclick = function () {
     document.getElementById("start-screen").style.top = "-630px";
     document.getElementById("screen1-audio").play();
