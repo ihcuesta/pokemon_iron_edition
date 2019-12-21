@@ -9,9 +9,7 @@ class Trainer {
     this.srcX = 0; // Posición x en el grid de imágenes
     this.srcY = 0; // Posición y en el grid de imágenes
     this.sheetWidth = 200; // Ancho del grid de imágenes
-    // this.sheetHeight = 50; // Alto del grid de imágenes
     this.cols = 4; // Número de columnas en el grid de imágenes
-    // this.rows = 4; // Número de filas en el grid de imágenes
     this.width = this.sheetWidth / this.cols; // El ancho de la imagen será el ancho total del grid de imágenes entre el número de columnas (es decir, el ancho de una columna)
     this.height = 50;
 
@@ -26,9 +24,9 @@ class Trainer {
     // this.currentFrame = ++this.currentFrame % this.cols;
     this.srcX = this.framesIndex * Math.floor(this.image.width / this.frames);
     this.ctx.drawImage( // Cada línea es un argumento de la función drawImage
-      this.image, // La imagen
-      this.srcX, // Posición x en el grid de imágenes
-      this.srcY, // La y
+      this.image, 
+      this.srcX, 
+      this.srcY,
       50,
       50,
       this.posX,
@@ -36,7 +34,6 @@ class Trainer {
       50,
       50
     )
-
     this.animate(framesCounter)
   }
 
@@ -50,7 +47,6 @@ class Trainer {
         if (this.framesIndex > 3) this.framesIndex = 0;
       }
     }
-
   }
 
   move(limit) {
@@ -69,7 +65,6 @@ class Trainer {
         this.active = false;
       }
     }
-
     if (Game.screen === 3) {
       if (this.posY > limit) {
         this.posY -= 2;
@@ -78,11 +73,4 @@ class Trainer {
       }
     }
   }
-
-  
-
-
-
-
-
 }
