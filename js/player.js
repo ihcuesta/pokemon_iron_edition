@@ -224,7 +224,7 @@ activeBattle(name, image, imageAttack, screen) {
   setTimeout(function () {
     
     battle(name, image, imageAttack, screen);
-  }, 3000);
+  }, 2500);
 }
 
 firstSteps(name) {
