@@ -3,7 +3,6 @@ function battle(name, image, imageAttack, screen) {
     document.getElementById("pokemon-img-attack").style.animation = "none";
     document.getElementById("pokemon-img").style.display = "block";
    
-    // let screen = 2;  // Eliminar en versión definitiva
     let n = 0;
 
     let optionsBattle1 = [
@@ -99,8 +98,6 @@ function battle(name, image, imageAttack, screen) {
     }
 
     document.getElementById("battle").className = "visible";
-    // let pokemonsAppear = setTimeout(() => {
-    // }, 2000);
     let pokemon = new Enemy(name, image, imageAttack);
     document.getElementById("life-enemy").innerText = pokemon.life;
     document.getElementById("rf-enemy").style.width = pokemon.lifeBar + "px";
@@ -108,7 +105,6 @@ function battle(name, image, imageAttack, screen) {
     let pikachu = new Pikachu();
     document.getElementById("life-pikachu").innerText = pikachu.life;
     document.getElementById("rf-pika").style.width = pikachu.lifeBar + "px";
-
     document.getElementById("pokemon-name").innerText = pokemon.name;
     document.getElementById("pokemon-img").src = pokemon.image;
     document.getElementById("pokemon-img-attack").src = pokemon.imageAttack;
@@ -118,7 +114,6 @@ function battle(name, image, imageAttack, screen) {
     document.getElementById("attackBtn").onclick = function () {
         pikachuShift();
     };
-
 
     let opt1 = document.getElementById("opt1");
     let opt2 = document.getElementById("opt2");
@@ -152,14 +147,12 @@ function battle(name, image, imageAttack, screen) {
     }
 
     function pikachuShift() {
-
         addOptions(screen);
         document.getElementById("attackBtn").style.display = "none";
         document.getElementById("opt1").style.display = "block";
         document.getElementById("opt2").style.display = "block";
         textIntro("Haz click en la opción correcta:");
     }
-
 
     function enemyShift() {
         if (pokemon.life > 0) {
@@ -245,6 +238,5 @@ function battle(name, image, imageAttack, screen) {
         document.getElementById("life-pikachu").innerText = pikachu.life;
         document.getElementById("pikachu-img").style.animation = "damage 1s 1";
     }
-
 }
 

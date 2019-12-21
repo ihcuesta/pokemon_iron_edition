@@ -1,5 +1,5 @@
 class Player {
-  constructor(ctx, x, y, image, keys, name) { // Constructor
+  constructor(ctx, x, y, image, keys, name) {
     this.ctx = ctx;
     this.notCheck = false;
     this.goOn = false;
@@ -8,19 +8,17 @@ class Player {
     this.image.src = image;
     this.framesCounter = 0;
     this.ableToMove = false;
-   this.soundBattle = false;
-   this.name = name;
-   this.moving = false;
+    this.soundBattle = false;
+    this.name = name;
+    this.moving = false;
 
-    this.posX = x; // Lo coloca a 700px del borde izquierdo de la pantalla
-    this.posY = y; // Lo coloca a 430px del borde superior de la pantalla
+    this.posX = x;
+    this.posY = y;
 
     this.limitUp = 0;
     this.limitRight = 750;
     this.limitDown = 450;
     this.limitLeft = 0;
-
-    // this.gameWidth = gameWidth;
 
     this.currentFrame = 0; // Frame actual del grid
     this.srcX = 0; // Posición x en el grid de imágenes
@@ -49,9 +47,9 @@ class Player {
     // this.currentFrame = ++this.currentFrame % this.cols;
     this.srcX = this.framesIndex * Math.floor(this.image.width / this.frames);
     this.ctx.drawImage( // Cada línea es un argumento de la función drawImage
-      this.image, // La imagen
-      this.srcX, // Posición x en el grid de imágenes
-      this.srcY, // La y
+      this.image,
+      this.srcX,
+      this.srcY,
       50,
       50,
       this.posX,
@@ -59,10 +57,9 @@ class Player {
       50,
       50
     )
-if (this.moving) {
-  this.animate(framesCounter)
-}
-   
+    if (this.moving) {
+      this.animate(framesCounter)
+    }
   }
 
   animate(framesCounter) {
@@ -85,7 +82,6 @@ if (this.moving) {
           }
           if (this.posX > 60 && this.posY > 400) {
             this.posY -= 10;
-
           }
           if (!this.notCheck) {
             if (this.posY === 400 && this.posX > 330 && this.posX < 430) {
@@ -141,8 +137,6 @@ if (this.moving) {
             this.activeBattle("Blastoise", "img/b.gif", "img/b-2.gif", 2);
             this.soundBattle = true;
           }
-
-
         } else if (direction === "down") {
           this.moving = true;
           this.srcY = this.trackDown * this.height;
@@ -152,7 +146,6 @@ if (this.moving) {
           if (this.posX < 60 && this.limitDown) {
             this.posY += 10;
           }
-
         } else if (direction === "left") {
           this.moving = true;
           this.srcY = this.trackLeft * this.height;
@@ -179,13 +172,11 @@ if (this.moving) {
           if (this.posY > 310 && this.posX < 350) {
             this.posX += 10;
           }
-        
+
           if (this.posX > 475) {
             this.activeBattle("Raichu", "img/r.gif", "img/r-2.gif", 3);
             this.soundBattle = true;
           }
-
-
         } else if (direction === "down") {
           this.moving = true;
           this.srcY = this.trackDown * this.height;
@@ -195,7 +186,6 @@ if (this.moving) {
           if (this.posX > 350 && this.posY < 300) {
             this.posY += 10;
           }
-
         } else if (direction === "left") {
           this.moving = true;
           this.srcY = this.trackLeft * this.height;
@@ -207,9 +197,8 @@ if (this.moving) {
     }
   }
 
-activeBattle(name, image, imageAttack, screen) {
-  
-  // setTimeout(function () {
+  activeBattle(name, image, imageAttack, screen) {
+    // setTimeout(function () {
     if (Game.screen === 1) {
       textIntro("¡Alto! Demuéstrame lo que has aprendido.");
     }
@@ -219,143 +208,118 @@ activeBattle(name, image, imageAttack, screen) {
     if (Game.screen === 3) {
       textIntro("¿Preparado para el módulo 2?");
     }
-    
-  // }, 500);
-  setTimeout(function () {
-    
-    battle(name, image, imageAttack, screen);
-  }, 2500);
-}
+    // }, 500);
+    setTimeout(function () {
+      battle(name, image, imageAttack, screen);
+    }, 2500);
+  }
 
-firstSteps(name) {
-  if (Game.framesCounter < 30) {
-    if (Game.screen === 1) {
-      this.srcY = this.trackUp * this.height;
-      this.posY -= 2;
-      
-    }
-    if (Game.screen === 2) {
-     
-      this.srcY = this.trackUp * this.height;
-      this.posY -= 2;
-      if (this.posY === 442) {
-        textIntro("¡Bien hecho " + name + "! Encuentra tu clase.")
+  firstSteps(name) {
+    if (Game.framesCounter < 30) {
+      if (Game.screen === 1) {
+        this.srcY = this.trackUp * this.height;
+        this.posY -= 2;
       }
-      
-    }
-    if (Game.screen === 3) {
-      
-      this.srcY = this.trackRight * this.height;
-      this.posX += 2;
-      if (this.posX === 40) {
-        textIntro("¡Bien peleado " + name + "! ¡Último nivel!")
-      }
-    }
-  }
-  this.ableToMove = true; // Recuerda igualarlo a false cuando se pase de pantalla
-}
-
-nextScreen() {
-if (Game.screen === 1 || Game.screen === 2) {
-  if (this.goOn) {
-    this.moving = true;
-    this.srcY = this.trackUp * this.height;
-    this.posY -= 1;
-  }
-}
-
-if (Game.screen === 3) {
-  if (this.goOn) {
-    this.srcY = this.trackDown * this.height;
-   
-  }
-}
-  
-}
-
-approach() {
-  if (Game.screen === 1) {
-    return this.posX + this.width;
-  }
-  if (Game.screen === 2) {
-    return this.posY + this.height;
-  }
-  if (Game.screen === 3) {
-    return this.posY + this.height;
-  }
-}
-
-
-setListeners() {
-  document.addEventListener('keydown', (e) => {
-    switch (e.keyCode) {
-      case this.keys.TOP_KEY:
-        this.move("up");
-        if (Game.screen === 1) {
-          if (this.posY > 35) {
-            
-          }
-        } 
-        if (Game.screen === 2) {
-         
-            document.getElementById("screen2-audio").play();
-          
-        } 
-        break;
-      case this.keys.RIGHT_KEY:
-        this.move("right");
-        
-      
-        if (Game.screen === 3) {
-         
-            document.getElementById("screen3-audio").play();
-        
+      if (Game.screen === 2) {
+        this.srcY = this.trackUp * this.height;
+        this.posY -= 2;
+        if (this.posY === 442) {
+          textIntro("¡Bien hecho " + name + "! Encuentra tu clase.")
         }
-        break;
-      case this.keys.DOWN_KEY:
-        this.move("down");
-        break;
-      case this.keys.LEFT_KEY:
-        this.move("left");
-        break;
+      }
+      if (Game.screen === 3) {
+        this.srcY = this.trackRight * this.height;
+        this.posX += 2;
+        if (this.posX === 40) {
+          textIntro("¡Bien peleado " + name + "! ¡Último nivel!")
+        }
+      }
+    }
+    this.ableToMove = true; // Recuerda igualarlo a false cuando se pase de pantalla
+  }
+
+  nextScreen() {
+    if (Game.screen === 1 || Game.screen === 2) {
+      if (this.goOn) {
+        this.moving = true;
+        this.srcY = this.trackUp * this.height;
+        this.posY -= 1;
+      }
     }
 
-
-  })
-}
-
-activeSoundBattle() {
-if (this.soundBattle) {
-  if (Game.screen === 1) {
-    document.getElementById("screen1-audio").pause();
-    document.getElementById("battle1-audio").play();
+    if (Game.screen === 3) {
+      if (this.goOn) {
+        this.srcY = this.trackDown * this.height;
+      }
+    }
   }
-  if (Game.screen === 2) {
-    document.getElementById("screen2-audio").pause();
-    document.getElementById("battle2-audio").play();
-  }
-  if (Game.screen === 3) {
-    document.getElementById("screen3-audio").pause();
-    document.getElementById("battle3-audio").play();
-  }
- 
-}
-}
 
-activeSoundVictory() {
-  if (!this.soundBattle) {
+  approach() {
     if (Game.screen === 1) {
-      document.getElementById("battle1-audio").pause();
+      return this.posX + this.width;
     }
     if (Game.screen === 2) {
-      document.getElementById("battle2-audio").pause();
+      return this.posY + this.height;
     }
     if (Game.screen === 3) {
-      document.getElementById("battle3-audio").pause();
-      document.getElementById("victory-audio").play();
+      return this.posY + this.height;
     }
-  
   }
-}
 
+  setListeners() {
+    document.addEventListener('keydown', (e) => {
+      switch (e.keyCode) {
+        case this.keys.TOP_KEY:
+          this.move("up");
+          if (Game.screen === 2) {
+            document.getElementById("screen2-audio").play();
+          }
+          break;
+        case this.keys.RIGHT_KEY:
+          this.move("right");
+          if (Game.screen === 3) {
+            document.getElementById("screen3-audio").play();
+          }
+          break;
+        case this.keys.DOWN_KEY:
+          this.move("down");
+          break;
+        case this.keys.LEFT_KEY:
+          this.move("left");
+          break;
+      }
+    })
+  }
+
+  activeSoundBattle() {
+    if (this.soundBattle) {
+      if (Game.screen === 1) {
+        document.getElementById("screen1-audio").pause();
+        document.getElementById("battle1-audio").play();
+      }
+      if (Game.screen === 2) {
+        document.getElementById("screen2-audio").pause();
+        document.getElementById("battle2-audio").play();
+      }
+      if (Game.screen === 3) {
+        document.getElementById("screen3-audio").pause();
+        document.getElementById("battle3-audio").play();
+      }
+    }
+  }
+
+  activeSoundVictory() {
+    if (!this.soundBattle) {
+      if (Game.screen === 1) {
+        document.getElementById("battle1-audio").pause();
+      }
+      if (Game.screen === 2) {
+        document.getElementById("battle2-audio").pause();
+      }
+      if (Game.screen === 3) {
+        document.getElementById("battle3-audio").pause();
+        document.getElementById("victory-audio").play();
+      }
+    }
+  }
 }
